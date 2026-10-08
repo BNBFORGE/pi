@@ -1,150 +1,472 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pi ↔ USDT Swap Information</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<title>Pi ↔ USDT Exchange</title>
 
-    body {
-      background: #080b12;
-      color: white;
-      line-height: 1.6;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    header {
-      background: #111827;
-      padding: 18px 20px;
-      text-align: center;
-      border-bottom: 1px solid #293241;
-    }
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#070812;
+  color:#fff;
+  line-height:1.6;
+}
 
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      color: #f5b942;
-    }
+header{
+  background:#101225;
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #292d45;
+}
 
-    header p {
-      color: #aeb7c6;
-      margin-top: 5px;
-    }
+.logo{
+  font-size:24px;
+  font-weight:bold;
+  color:#f5b942;
+}
 
-    .hero {
-      padding: 55px 20px;
-      text-align: center;
-      background:
-        radial-gradient(circle at top, #3a2b5c 0%, #111827 45%, #080b12 100%);
-    }
+.badge{
+  background:#251d38;
+  color:#c9a7ff;
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:13px;
+}
 
-    .hero h1 {
-      font-size: 38px;
-      margin-bottom: 15px;
-    }
+.hero{
+  text-align:center;
+  padding:70px 20px;
+  background:
+    radial-gradient(circle at top,#513476 0%,#17152c 35%,#070812 75%);
+}
 
-    .hero h1 span {
-      color: #f5b942;
-    }
+.hero .pi{
+  width:90px;
+  height:90px;
+  margin:0 auto 20px;
+  border-radius:50%;
+  background:#7b3fe4;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:55px;
+  font-weight:bold;
+  box-shadow:0 0 40px rgba(123,63,228,.55);
+}
 
-    .hero p {
-      max-width: 650px;
-      margin: auto;
-      color: #c9d0dc;
-    }
+.hero h1{
+  font-size:42px;
+  margin-bottom:12px;
+}
 
-    .buttons {
-      margin-top: 28px;
-    }
+.hero h1 span{
+  color:#f5b942;
+}
 
-    .btn {
-      display: inline-block;
-      padding: 13px 24px;
-      margin: 6px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      background: #f5b942;
-      color: #111;
-    }
+.hero p{
+  max-width:680px;
+  margin:auto;
+  color:#c4c8d8;
+  font-size:17px;
+}
 
-    .btn.secondary {
-      background: transparent;
-      border: 1px solid #f5b942;
-      color: #f5b942;
-    }
+.buttons{
+  margin-top:28px;
+}
 
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 40px 20px;
-    }
+.btn{
+  display:inline-block;
+  padding:14px 24px;
+  margin:5px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+  background:#f5b942;
+  color:#111;
+}
 
-    .section-title {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 28px;
-    }
+.btn.secondary{
+  background:transparent;
+  color:#f5b942;
+  border:1px solid #f5b942;
+}
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
+.container{
+  max-width:1050px;
+  margin:auto;
+  padding:55px 20px;
+}
 
-    .card {
-      background: #121925;
-      border: 1px solid #263244;
-      border-radius: 15px;
-      padding: 25px;
-    }
+.title{
+  text-align:center;
+  font-size:30px;
+  margin-bottom:30px;
+}
 
-    .card h3 {
-      color: #f5b942;
-      margin-bottom: 10px;
-    }
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
 
-    .steps {
-      counter-reset: step;
-    }
+.card{
+  background:#111426;
+  border:1px solid #292e48;
+  border-radius:18px;
+  padding:25px;
+}
 
-    .step {
-      background: #121925;
-      margin: 14px 0;
-      padding: 20px;
-      border-radius: 12px;
-      border-left: 4px solid #f5b942;
-    }
+.card .icon{
+  font-size:34px;
+  margin-bottom:10px;
+}
 
-    .step strong {
-      color: #f5b942;
-    }
+.card h3{
+  color:#f5b942;
+  margin-bottom:8px;
+}
 
-    .notice {
-      margin-top: 30px;
-      padding: 18px;
-      background: #171d29;
-      border-radius: 12px;
-      border: 1px solid #394454;
-      color: #cbd3df;
-    }
+.card p{
+  color:#b8bdce;
+}
 
-    footer {
-      text-align: center;
-      padding: 30px 20px;
-      background: #05070b;
-      color: #8791a1;
-      margin-top: 30px;
-    }
+.exchange{
+  max-width:650px;
+  margin:0 auto;
+  background:#111426;
+  border:1px solid #343953;
+  border-radius:20px;
+  padding:25px;
+  box-shadow:0 15px 50px rgba(0,0,0,.35);
+}
 
-    @media (max-width: 600px) {
-      .hero h1 {
-        font-size: 30px;
-      }
-   
+.exchange label{
+  display:block;
+  color:#bfc4d4;
+  margin:14px 0 7px;
+}
+
+.exchange input{
+  width:100%;
+  padding:15px;
+  background:#080b16;
+  border:1px solid #363b56;
+  border-radius:10px;
+  color:white;
+  font-size:17px;
+  outline:none;
+}
+
+.exchange input:focus{
+  border-color:#8d5bea;
+}
+
+.rate{
+  text-align:center;
+  margin:20px 0;
+  padding:12px;
+  background:#19152a;
+  border-radius:10px;
+  color:#c9a7ff;
+}
+
+.result{
+  margin-top:20px;
+  padding:18px;
+  border-radius:12px;
+  background:#171a2d;
+  text-align:center;
+}
+
+.result strong{
+  display:block;
+  font-size:25px;
+  color:#f5b942;
+}
+
+.steps{
+  max-width:800px;
+  margin:auto;
+}
+
+.step{
+  display:flex;
+  gap:18px;
+  margin:15px 0;
+  padding:20px;
+  background:#111426;
+  border:1px solid #292e48;
+  border-radius:15px;
+}
+
+.number{
+  min-width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#7b3fe4;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:bold;
+}
+
+.step h3{
+  color:#f5b942;
+  margin-bottom:4px;
+}
+
+.step p{
+  color:#b8bdce;
+}
+
+.notice{
+  margin-top:30px;
+  padding:20px;
+  background:#171a29;
+  border-left:4px solid #f5b942;
+  border-radius:10px;
+  color:#c5cad7;
+}
+
+footer{
+  text-align:center;
+  padding:35px 20px;
+  background:#05060c;
+  color:#858b9e;
+  margin-top:30px;
+}
+
+footer strong{
+  color:#f5b942;
+}
+
+@media(max-width:600px){
+
+  header{
+    padding:15px;
+  }
+
+  .logo{
+    font-size:20px;
+  }
+
+  .hero{
+    padding:55px 18px;
+  }
+
+  .hero h1{
+    font-size:31px;
+  }
+
+  .hero p{
+    font-size:15px;
+  }
+
+  .container{
+    padding:40px 15px;
+  }
+
+  .title{
+    font-size:25px;
+  }
+
+  .step{
+    padding:16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">π Pi ↔ USDT</div>
+  <div class="badge">Exchange Information</div>
+</header>
+
+<section class="hero">
+
+  <div class="pi">π</div>
+
+  <h1>Pi <span>↔</span> USDT Exchange</h1>
+
+  <p>
+    Explore the Pi-to-USDT exchange process with a simple,
+    mobile-friendly interface and step-by-step guidance.
+  </p>
+
+  <div class="buttons">
+    <a href="#exchange" class="btn">Open Exchange Demo</a>
+    <a href="#guide" class="btn secondary">View Guide</a>
+  </div>
+
+</section>
+
+<section class="container">
+
+  <h2 class="title">Why Use the Exchange?</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="icon">🔄</div>
+      <h3>Pi ↔ USDT</h3>
+      <p>
+        Review the conversion process between Pi and USDT
+        through an easy-to-use interface.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">⚡</div>
+      <h3>Simple Process</h3>
+      <p>
+        Follow clear steps from entering an amount to reviewing
+        the exchange information.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🔐</div>
+      <h3>Stay Secure</h3>
+      <p>
+        Never share your wallet passphrase, private key,
+        password or recovery phrase.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="container" id="exchange">
+
+  <h2 class="title">Exchange Calculator</h2>
+
+  <div class="exchange">
+
+    <label for="piAmount">Pi Amount</label>
+
+    <input
+      id="piAmount"
+      type="number"
+      min="0"
+      step="0.01"
+      placeholder="Enter Pi amount"
+      oninput="calculate()"
+    >
+
+    <div class="rate">
+      Demonstration rate: 1 Pi = 314,159 USDT
+    </div>
+
+    <div class="result">
+      Estimated USDT
+      <strong id="usdtResult">0 USDT</strong>
+    </div>
+
+    <div class="notice">
+      This calculator is a demonstration only. It does not execute
+      cryptocurrency transactions and the displayed rate is not a
+      live market price.
+    </div>
+
+  </div>
+
+</section>
+
+<section class="container" id="guide">
+
+  <h2 class="title">How the Exchange Process Works</h2>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="number">1</div>
+      <div>
+        <h3>Open the Exchange</h3>
+        <p>
+          Open the exchange interface you intend to use and verify
+          that you are on the correct website.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="number">2</div>
+      <div>
+        <h3>Enter the Amount</h3>
+        <p>
+          Enter the amount of Pi you want to review or exchange.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="number">3</div>
+      <div>
+        <h3>Review the Details</h3>
+        <p>
+          Carefully check the amount, destination and applicable
+          fees before confirming anything.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="number">4</div>
+      <div>
+        <h3>Confirm</h3>
+        <p>
+          Only confirm a transaction after verifying all details
+          and ensuring that you trust the service.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="notice">
+    <strong>Security reminder:</strong>
+    Never give anyone your Pi Wallet passphrase, private key,
+    recovery phrase or login credentials. A legitimate service
+    should not require your secret recovery phrase to receive or
+    process a transaction.
+  </div>
+
+</section>
+
+<footer>
+  <p><strong>π Pi ↔ USDT</strong></p>
+  <p>Information & demonstration interface</p>
+  <p>© 2026</p>
+</footer>
+
+<script>
+function calculate(){
+
+  const pi = parseFloat(
+    document.getElementById("piAmount").value
+  ) || 0;
+
+  const rate = 314159;
+
+  const result = pi * rate;
+
+  document.getElementById("usdtResult").textContent =
+    result.toLocaleString() + " USDT";
+}
+</script>
+
+</body>
+  </html>

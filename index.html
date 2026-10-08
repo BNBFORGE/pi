@@ -1,784 +1,198 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+from pathlib import Path
 
-<title>Pi ↔ USDT Exchange</title>
+path = Path("/mnt/data/index.html")
+html = path.read_text(encoding="utf-8")
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+# Replace the Core Team Apps styling with a closer Pi Apps-style layout:
+# white/light background, purple top bar, compact 3-column app grid,
+# rounded square app tiles, labels below, and a "New" badge on Exchange.
+start = html.index("/* Core Team Apps */")
+end = html.index("/* Exchange request */")
+
+apps_css = r'''/* Core Team Apps — Pi Apps-style layout */
+.apps-page {
+  background: #f5f5f7;
+  color: #3b2350;
+  min-height: calc(100vh - 75px);
 }
 
-html{
-  scroll-behavior:smooth;
+.apps-topbar {
+  background: #6f3f86;
+  color: #fff;
+  height: 58px;
+  padding: 0 18px;
+  display: grid;
+  grid-template-columns: 42px 1fr 42px;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,.08);
 }
 
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:#070812;
-  color:#fff;
-  line-height:1.6;
+.apps-topbar button {
+  width: 38px;
+  height: 38px;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 27px;
+  line-height: 1;
 }
 
-/* HEADER */
-header{
-  background:#101225;
-  padding:18px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid #292d45;
-  position:sticky;
-  top:0;
-  z-index:100;
+.apps-topbar span:nth-child(2) {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
 }
 
-.logo{
-  font-size:24px;
-  font-weight:bold;
-  color:#f5b942;
+.apps-topbar span:last-child {
+  text-align: right;
+  font-size: 22px;
 }
 
-.badge{
-  background:#251d38;
-  color:#c9a7ff;
-  padding:7px 12px;
-  border-radius:20px;
-  font-size:13px;
+.apps-inner {
+  width: min(100%, 760px);
+  margin: auto;
+  padding: 28px 18px 70px;
 }
 
-/* HERO */
-.hero{
-  text-align:center;
-  padding:70px 20px;
-  background:
-    radial-gradient(circle at top,#513476 0%,#17152c 35%,#070812 75%);
+.core-title {
+  color: #222;
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 25px;
 }
 
-.hero .pi{
-  width:90px;
-  height:90px;
-  margin:0 auto 20px;
-  border-radius:50%;
-  background:#7b3fe4;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:55px;
-  font-weight:bold;
-  box-shadow:0 0 40px rgba(123,63,228,.55);
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 24px;
+  row-gap: 27px;
 }
 
-.hero h1{
-  font-size:42px;
-  margin-bottom:12px;
+.app-card {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #3f2750;
+  border-radius: 14px;
+  text-align: center;
+  transition: transform .16s ease;
 }
 
-.hero h1 span{
-  color:#f5b942;
+.app-card:hover,
+.app-card:focus-visible {
+  background: transparent;
+  transform: translateY(-2px);
+  outline: none;
 }
 
-.hero p{
-  max-width:680px;
-  margin:auto;
-  color:#c4c8d8;
-  font-size:17px;
+.app-icon {
+  width: min(100%, 104px);
+  aspect-ratio: 1 / 1;
+  height: auto;
+  margin: auto;
+  border: 1.5px solid #8a679b;
+  border-radius: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #70428f;
+  font-size: 43px;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
 }
 
-.buttons{
-  margin-top:28px;
+.app-card-label {
+  display: block;
+  margin-top: 9px;
+  color: #33283a;
+  font-size: 15px;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.btn{
-  display:inline-block;
-  padding:14px 24px;
-  margin:5px;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:bold;
-  background:#f5b942;
-  color:#111;
-  border:none;
-  cursor:pointer;
-  font-size:16px;
+.new-badge {
+  position: absolute;
+  top: -9px;
+  right: -5px;
+  z-index: 2;
+  background: #f3b52b;
+  color: #241c0c;
+  padding: 4px 9px;
+  border-radius: 13px;
+  font-size: 10px;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0,0,0,.15);
 }
 
-.btn:hover{
-  opacity:.9;
-}
+'''
 
-.btn.secondary{
-  background:transparent;
-  color:#f5b942;
-  border:1px solid #f5b942;
-}
+html = html[:start] + apps_css + html[end:]
 
-/* GENERAL CONTAINER */
-.container{
-  max-width:1050px;
-  margin:auto;
-  padding:55px 20px;
-}
-
-.title{
-  text-align:center;
-  font-size:30px;
-  margin-bottom:30px;
-}
-
-/* INFORMATION CARDS */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:18px;
-}
-
-.card{
-  background:#111426;
-  border:1px solid #292e48;
-  border-radius:18px;
-  padding:25px;
-}
-
-.card .icon{
-  font-size:34px;
-  margin-bottom:10px;
-}
-
-.card h3{
-  color:#f5b942;
-  margin-bottom:8px;
-}
-
-.card p{
-  color:#b8bdce;
-}
-
-/* PI APPS PAGE */
-#pi-apps{
-  background:#f7f7f9;
-  color:#70428f;
-  max-width:none;
-  min-height:650px;
-  padding:45px 20px 70px;
-}
-
-.pi-apps-inner{
-  max-width:850px;
-  margin:auto;
-}
-
-.pi-apps-header{
-  background:#70428f;
-  color:white;
-  padding:18px 20px;
-  border-radius:15px 15px 0 0;
-  text-align:center;
-  font-size:24px;
-  margin-bottom:30px;
-}
-
-.core-title{
-  color:#111;
-  font-size:24px;
-  margin-bottom:30px;
-  text-align:center;
-}
-
-.apps-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:28px;
-  max-width:760px;
-  margin:auto;
-}
-
-.app-card{
-  position:relative;
-  text-align:center;
-  padding:12px 8px;
-  color:#70428f;
-  cursor:pointer;
-  transition:.2s;
-  border-radius:15px;
-}
-
-.app-card:hover{
-  transform:translateY(-5px);
-  background:#f0edf4;
-}
-
-.app-icon{
-  width:110px;
-  height:110px;
-  margin:auto;
-  border:2px solid #70428f;
-  border-radius:22px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:52px;
-  font-weight:bold;
-  background:white;
-}
-
-.app-card h3{
-  margin-top:10px;
-  font-size:20px;
-  font-weight:normal;
-}
-
-.new-badge{
-  position:absolute;
-  right:0;
-  top:-10px;
-  background:#f5b942;
-  color:#111;
-  padding:6px 14px;
-  border-radius:18px;
-  font-size:13px;
-  font-weight:bold;
-  z-index:2;
-}
-
-/* EXCHANGE REQUEST */
-.exchange{
-  max-width:650px;
-  margin:0 auto;
-  background:#111426;
-  border:1px solid #343953;
-  border-radius:20px;
-  padding:25px;
-  box-shadow:0 15px 50px rgba(0,0,0,.35);
-}
-
-.exchange label{
-  display:block;
-  color:#bfc4d4;
-  margin:14px 0 7px;
-}
-
-.exchange input{
-  width:100%;
-  padding:15px;
-  background:#080b16;
-  border:1px solid #363b56;
-  border-radius:10px;
-  color:white;
-  font-size:17px;
-  outline:none;
-}
-
-.exchange input:focus{
-  border-color:#8d5bea;
-}
-
-.rate{
-  text-align:center;
-  margin:20px 0;
-  padding:12px;
-  background:#19152a;
-  border-radius:10px;
-  color:#c9a7ff;
-}
-
-.result{
-  margin-top:20px;
-  padding:18px;
-  border-radius:12px;
-  background:#171a2d;
-  text-align:center;
-}
-
-.result strong{
-  display:block;
-  font-size:25px;
-  color:#f5b942;
-}
-
-.notice{
-  margin-top:20px;
-  padding:20px;
-  background:#171a29;
-  border-left:4px solid #f5b942;
-  border-radius:10px;
-  color:#c5cad7;
-}
-
-/* AUTHORIZATION NOTICE */
-.authorization{
-  text-align:center;
-  margin-bottom:25px;
-}
-
-.authorization-icon{
-  width:65px;
-  height:65px;
-  border-radius:50%;
-  background:#7b3fe4;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  margin:0 auto 15px;
-  font-size:30px;
-}
-
-.authorization h3{
-  color:#f5b942;
-  margin-bottom:8px;
-}
-
-.authorization p{
-  color:#b8bdce;
-}
-
-/* GUIDE */
-.steps{
-  max-width:800px;
-  margin:auto;
-}
-
-.step{
-  display:flex;
-  gap:18px;
-  margin:15px 0;
-  padding:20px;
-  background:#111426;
-  border:1px solid #292e48;
-  border-radius:15px;
-}
-
-.number{
-  min-width:42px;
-  height:42px;
-  border-radius:50%;
-  background:#7b3fe4;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-weight:bold;
-}
-
-.step h3{
-  color:#f5b942;
-  margin-bottom:4px;
-}
-
-.step p{
-  color:#b8bdce;
-}
-
-/* FOOTER */
-footer{
-  text-align:center;
-  padding:35px 20px;
-  background:#05060c;
-  color:#858b9e;
-  margin-top:30px;
-}
-
-footer strong{
-  color:#f5b942;
-}
-
-/* HIDDEN PAGES */
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-/* MOBILE */
-@media(max-width:600px){
-
-  header{
-    padding:15px;
+# Replace the mobile app rules with Pi Apps-style proportions.
+old_mobile = '''  .apps-inner {
+    padding: 25px 12px 60px;
   }
 
-  .logo{
-    font-size:20px;
+  .apps-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
   }
 
-  .hero{
-    padding:55px 18px;
+  .app-icon {
+    width: 78px;
+    height: 78px;
+    border-radius: 17px;
+    font-size: 34px;
   }
 
-  .hero h1{
-    font-size:31px;
+  .app-card h3 {
+    font-size: 14px;
   }
 
-  .hero p{
-    font-size:15px;
+  .new-badge {
+    right: -2px;
+    top: -7px;
+    font-size: 9px;
+    padding: 4px 7px;
+  }
+'''
+new_mobile = '''  .apps-inner {
+    padding: 25px 14px 60px;
   }
 
-  .container{
-    padding:40px 15px;
+  .apps-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 12px;
+    row-gap: 24px;
   }
 
-  .title{
-    font-size:25px;
+  .app-icon {
+    width: 76px;
+    border-radius: 17px;
+    font-size: 31px;
   }
 
-  .apps-grid{
-    grid-template-columns:repeat(3,1fr);
-    gap:8px;
+  .app-card-label {
+    font-size: 12px;
+    margin-top: 7px;
   }
 
-  .app-icon{
-    width:78px;
-    height:78px;
-    border-radius:17px;
-    font-size:38px;
+  .new-badge {
+    right: -3px;
+    top: -7px;
+    font-size: 8px;
+    padding: 3px 6px;
   }
-
-  .app-card h3{
-    font-size:14px;
-  }
-
-  .new-badge{
-    font-size:10px;
-    padding:5px 8px;
-    right:-2px;
-  }
-
-  .step{
-    padding:16px;
-  }
-
-  .btn{
-    width:90%;
-    max-width:340px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<!-- HEADER -->
-<header>
-  <div class="logo">π Pi ↔ USDT</div>
-  <div class="badge">Exchange Information</div>
-</header>
-
-
-<!-- =====================================================
-     PAGE 1 — LANDING PAGE
-===================================================== -->
-
-<div id="home-page" class="page active">
-
-  <section class="hero">
-
-    <div class="pi">π</div>
-
-    <h1>
-      Pi <span>↔</span> USDT Exchange
-    </h1>
-
-    <p>
-      Explore the Pi-to-USDT exchange process with a simple,
-      mobile-friendly interface and step-by-step guidance.
-    </p>
-
-    <div class="buttons">
-
-      <!-- THIS NOW GOES TO PI APPS -->
-      <button class="btn" onclick="showApps()">
-        Exchange
-      </button>
-
-      <a href="#guide" class="btn secondary">
-        View Guide
-      </a>
-
-    </div>
-
-  </section>
-
-
-  <section class="container">
-
-    <h2 class="title">
-      Why Use the Exchange?
-    </h2>
-
-    <div class="cards">
-
-      <div class="card">
-        <div class="icon">🔄</div>
-
-        <h3>Pi ↔ USDT</h3>
-
-        <p>
-          Review the conversion process between Pi and USDT
-          through an easy-to-use interface.
-        </p>
-      </div>
-
-
-      <div class="card">
-        <div class="icon">⚡</div>
-
-        <h3>Simple Process</h3>
-
-        <p>
-          Follow clear steps from entering an amount to reviewing
-          the exchange information.
-        </p>
-      </div>
-
-
-      <div class="card">
-        <div class="icon">🔐</div>
-
-        <h3>Stay Secure</h3>
-
-        <p>
-          Never share your wallet passphrase, private key,
-          password or recovery phrase.
-        </p>
-      </div>
-
-    </div>
-
-  </section>
-
-</div>
-
-
-<!-- =====================================================
-     PAGE 2 — PI APPS / CORE TEAM APPS
-===================================================== -->
-
-<div id="apps-page" class="page">
-
-  <section id="pi-apps">
-
-    <div class="pi-apps-inner">
-
-      <div class="pi-apps-header">
-        Home π
-      </div>
-
-      <h2 class="core-title">
-        Core Team Apps
-      </h2>
-
-
-      <div class="apps-grid">
-
-        <!-- EXCHANGE -->
-        <div class="app-card" onclick="showExchangeRequest()">
-
-          <div class="new-badge">
-            New
-          </div>
-
-          <div class="app-icon">
-            π
-          </div>
-
-          <h3>
-            Exchange
-          </h3>
-
-        </div>
-
-
-        <!-- WALLET -->
-        <div class="app-card">
-
-          <div class="app-icon">
-            ▣
-          </div>
-
-          <h3>
-            Wallet
-          </h3>
-
-        </div>
-
-
-        <!-- FIRESIDE -->
-        <div class="app-card">
-
-          <div class="app-icon">
-            🔥
-          </div>
-
-          <h3>
-            Fireside
-          </h3>
-
-        </div>
-
-
-        <!-- BRAINSTORM -->
-        <div class="app-card">
-
-          <div class="app-icon">
-            💡
-          </div>
-
-          <h3>
-            Brainstorm
-          </h3>
-
-        </div>
-
-
-        <!-- MINE -->
-        <div class="app-card">
-
-          <div class="app-icon">
-            π
-          </div>
-
-          <h3>
-            Mine
-          </h3>
-
-        </div>
-
-
-        <!-- BLOCKCHAIN -->
-        <div class="app-card">
-
-          <div class="app-icon">
-            ⛓
-          </div>
-
-          <h3>
-            Blockchain
-          </h3>
-
-        </div>
-
-
-        <!-- DEVELOP -->
-        <div class="app-card">
-
-          <div class="app-icon">
-            💻
-          </div>
-
-          <h3>
-            Develop
-          </h3>
-
-        </div>
-
-
-        <!-- KYC -->
-        <div class="app-card">
-
-          <div class="app-icon">
-            🪪
-          </div>
-
-          <h3>
-            KYC
-          </h3>
-
-        </div>
-
-
-        <!-- CHAT -->
-        <div class="app-card">
-
-          <div class="app-icon">
-            💬
-          </div>
-
-          <h3>
-            Chat
-          </h3>
-
-        </div>
-
-
-        <!-- PROFILES -->
-        <div class="app-card">
-
-          <div class="app-icon">
-            👤
-          </div>
-
-          <h3>
-            Profiles
-          </h3>
-
-        </div>
-
-
-        <!-- DOMAIN -->
-        <div class="app-card">
-
-          <div class="app-icon">
-            .pi
-          </div>
-
-          <h3>
-            Domain
-          </h3>
-
-        </div>
-
-
-        <!-- APP STUDIO -->
-        <div class="app-card">
-
-          <div class="app-icon">
-            ✦
-          </div>
-
-          <h3>
-            App Studio
-          </h3>
-
-        </div>
-
-
-        <!-- LAUNCHPAD -->
-        <div class="app-card">
-
-          <div class="app-icon">
-            ↑
-          </div>
-
-          <h3>
-            Launchpad
-          </h3>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-</div>
-
-
-<!-- =====================================================
-     PAGE 3 — EXCHANGE REQUEST
-===================================================== -->
-
-<div id="exchange-page" class="page">
-
-  <section class="container">
-
-    <h2 class="title">
-      Exchange Request
-    </h2> ask 24 word phassphrase 
-
-
-   
+'''
+if old_mobile in html:
+    html = html.replace(old_mobile, new_mobile)
+
+path.write_text(html, encoding="utf-8")
+print("Updated:", path)
+print("Pi Apps-style grid and mobile layout applied.")
